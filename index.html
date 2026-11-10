@@ -5,11 +5,14 @@
 <meta charset="utf-8">
 <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <title>Beranda | Portal Tenant MM2100</title>
+<meta http-equiv="Cache-Control" content="no-store">
 <meta name="description" content="Portal tenant MM2100 Industrial Town. Laporkan kejadian, ajukan dokumen, dan ikuti berita kawasan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="sync.js"></script>
 <style>
 :root{
   /* Brand MM2100: placeholder, ganti dengan hex resmi */
@@ -546,6 +549,10 @@ details summary{cursor:pointer;font-weight:700;color:var(--brand-ink);padding:6p
 .demo-toggle span{color:#C5CCD6;margin-right:6px;font-weight:600}
 .demo-toggle button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:8px 14px;background:transparent;color:#fff;cursor:pointer;min-height:36px}
 .demo-toggle button[aria-pressed="true"]{background:#fff;color:#101828}
+.demo-toggle .demo-sep{width:1px;align-self:stretch;background:rgba(255,255,255,.2);margin:5px 3px}
+.demo-toggle .demo-cms{display:inline-flex;align-items:center;gap:7px;font:inherit;font-weight:700;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:7px 14px;min-height:36px;text-decoration:none;white-space:nowrap}
+.demo-toggle .demo-cms:hover{background:rgba(255,255,255,.14)}
+.demo-toggle .demo-cms svg{width:15px;height:15px;opacity:.85}
 
 @media (max-width:960px){
   .member-nav:not([hidden]){display:flex;order:1;margin-left:auto}
@@ -556,6 +563,8 @@ details summary{cursor:pointer;font-weight:700;color:var(--brand-ink);padding:6p
   .site-header.open .member-nav{width:auto;padding:0}
 }
 .demo-toggle{white-space:nowrap}
+.demo-toggle>*{flex:none}
+@media (max-width:820px){.demo-toggle{max-width:calc(100vw - 16px);overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}.demo-toggle::-webkit-scrollbar{display:none}}
 @media (max-width:480px){.demo-toggle span{display:none}.demo-toggle{padding:5px}}
 
 /* v6: report detail */
@@ -1538,7 +1547,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
           <div class="sc-row"><div class="sc-label"><span class="sc-ic ic-rep" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>Laporan saya</div><button class="btn-new" type="button" data-open-report><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Buat laporan</button></div>
           <p class="sc-big">2 laporan aktif</p>
           <a class="rep-latest" href="#laporan-1">
-            <span class="rl-top"><span class="rl-no">LP-2026-0412</span><span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Petugas menuju lokasi</span></span>
+            <span class="rl-top"><span class="rl-no">LP-2026-0415</span><span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Petugas menuju lokasi</span></span>
             <span class="rl-title">Lampu jalan mati di koridor utama</span>
             <span class="steps" aria-label="Tahap 3 dari 4"><i class="on"></i><i class="on"></i><i class="now"></i><i></i></span>
           </a>
@@ -1744,7 +1753,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
 <main id="detail" class="detail" hidden aria-labelledby="dt-title">
   <div class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb">
-      <a href="#">Beranda</a><span aria-hidden="true">/</span><a href="#laporan-saya">Laporan saya</a><span aria-hidden="true">/</span><span aria-current="page">LP-2026-0412</span>
+      <a href="#">Beranda</a><span aria-hidden="true">/</span><a href="#laporan-saya">Laporan saya</a><span aria-hidden="true">/</span><span aria-current="page">LP-2026-0415</span>
     </nav>
 
     <div class="demo-state" role="group" aria-label="Contoh status laporan (demo)">
@@ -1756,7 +1765,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
 
     <header class="dt-head">
       <div>
-        <p class="dt-no">Laporan LP-2026-0412 <span class="dt-cat">Penerangan jalan</span></p>
+        <p class="dt-no">Laporan LP-2026-0415 <span class="dt-cat">Penerangan jalan</span></p>
         <h1 id="dt-title">Lampu jalan mati di koridor utama</h1>
         <p class="dt-sub">Dilaporkan 7 Okt 2026, 08.14 WIB oleh Anda</p>
       </div>
@@ -1888,7 +1897,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
         <section class="dt-card" aria-labelledby="inf-title">
           <h2 id="inf-title">Informasi laporan</h2>
           <dl class="kv kv-side">
-            <div><dt>Nomor</dt><dd>LP-2026-0412</dd></div>
+            <div><dt>Nomor</dt><dd>LP-2026-0415</dd></div>
             <div><dt>Ditangani oleh</dt><dd>Tim Teknik kawasan</dd></div>
             <div><dt>Pelapor</dt><dd>Roni S</dd></div>
             <div><dt>Perusahaan</dt><dd>PT Auto Pain</dd></div>
@@ -2112,7 +2121,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
           <a class="rl-a" href="#laporan-1">
             <span class="rl-ic rl-ic-lampu" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.1 14c.2-1 .7-1.7 1.4-2.5A4.6 4.6 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.4 2.5"/></svg></span>
             <span class="rl-main">
-              <span class="rl-meta"><span class="rl-no">LP-2026-0412</span><span class="rl-cat">Penerangan jalan</span></span>
+              <span class="rl-meta"><span class="rl-no">LP-2026-0415</span><span class="rl-cat">Penerangan jalan</span></span>
               <span class="rl-title">Lampu jalan mati di koridor utama</span>
               <span class="rl-sub">Dilaporkan 7 Okt 2026. Depan gerbang blok, dekat halte</span>
             </span>
@@ -2659,7 +2668,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
           <div class="mx-head"><h2 id="dbl-title">Laporan saya</h2><a href="#laporan-tenant">Lihat semua laporan</a></div>
           <ul class="dl-list">
             <li><a class="dl-row" href="#laporan-1"><span class="dl-main"><span class="dl-no">LP-2026-0398</span><b>Genangan air di depan gerbang blok</b><span class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i></span></span><span class="pill pill-amber"><span class="pdot" aria-hidden="true"></span>Menunggu konfirmasi Anda</span></a></li>
-            <li><a class="dl-row" href="#laporan-1"><span class="dl-main"><span class="dl-no">LP-2026-0412</span><b>Lampu jalan mati di koridor utama</b><span class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="now"></i><i class=""></i></span></span><span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Petugas menuju lokasi</span></a></li>
+            <li><a class="dl-row" href="#laporan-1"><span class="dl-main"><span class="dl-no">LP-2026-0415</span><b>Lampu jalan mati di koridor utama</b><span class="steps" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="now"></i><i class=""></i></span></span><span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Petugas menuju lokasi</span></a></li>
             <li><a class="dl-row" href="#laporan-1"><span class="dl-main"><span class="dl-no">LP-2026-0371</span><b>Sampah menumpuk di area parkir truk</b><span class="steps" aria-hidden="true"><i class="on"></i><i class="now"></i><i class=""></i><i class=""></i></span></span><span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Ditinjau</span></a></li>
           </ul>
         </section>
@@ -2832,7 +2841,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
     <fieldset class="da-scen">
       <legend>1. Pilih skenario laporan</legend>
       <label class="da-opt"><input type="radio" name="daScen" value="auto" checked><span><b>Cocok dengan aturan</b><small>Lampu jalan mati. Teknisi utama tersedia, langsung auto-assign.</small></span></label>
-      <label class="da-opt"><input type="radio" name="daScen" value="manual"><span><b>Teknisi tidak tersedia</b><small>Tekanan air rendah. Teknisi utama cuti dan cadangan penuh, email aksi ke supervisor.</small></span></label>
+      <label class="da-opt"><input type="radio" name="daScen" value="manual"><span><b>Teknisi tidak tersedia</b><small>Tekanan air rendah. Teknisi utama cuti dan cadangan penuh, Email, WhatsApp &amp; push aksi ke supervisor.</small></span></label>
       <label class="da-opt"><input type="radio" name="daScen" value="urgent"><span><b>Laporan darurat</b><small>Kabel listrik terbuka. Ditandai darurat, supervisor dihubungi saat itu juga.</small></span></label>
     </fieldset>
     <div class="row da-run">
@@ -2854,6 +2863,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
           <div class="da-mailhead">
             <p class="da-subj" id="daSubj"></p>
             <p class="da-from">Portal MM2100 &lt;notifikasi@[domain-portal]&gt;, <span id="daTime"></span></p>
+            <div class="da-chans" id="daCh" hidden style="display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:9px"></div>
           </div>
           <div class="da-body">
             <span class="sevpill" id="daChip"></span>
@@ -2869,6 +2879,34 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
             <div class="da-fyi" id="daFyi" hidden><a href="#" id="daChange">Ubah teknisi</a></div>
             <p class="da-fine" id="daFine">Tombol membuka halaman konfirmasi, belum langsung menugaskan. Link berlaku 24 jam dan sekali pakai.</p>
             <button class="da-exp" type="button" id="daExpire">Coba buka link yang sudah kedaluwarsa</button>
+          </div>
+        </div>
+
+        <!-- WhatsApp aksi (muncul bila kanal termasuk WhatsApp) -->
+        <div id="daWA" hidden style="margin-top:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:9px;background:#075E54;color:#fff;padding:9px 12px">
+            <span style="width:30px;height:30px;border-radius:50%;background:#128C7E;display:grid;place-items:center;flex:none" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.1-.6 0a6.6 6.6 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.4.4 0 0 0 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 7.9a5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c2.2.9 2.2.6 2.6.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c-.1-.1-.3-.2-.5-.3z"/></svg></span>
+            <div style="line-height:1.25"><b style="font-size:13.5px;display:block">Portal MM2100</b><small style="opacity:.85;font-size:11px">WhatsApp Business &middot; sekarang</small></div>
+            <span style="margin-left:auto;font-size:10.5px;font-weight:800;background:#25D366;color:#07361C;padding:2px 9px;border-radius:999px">WhatsApp</span>
+          </div>
+          <div style="background:#ECE5DD;padding:13px">
+            <div style="background:#fff;border-radius:4px 12px 12px 12px;padding:11px 13px;box-shadow:0 1px 1px rgba(0,0,0,.1)">
+              <p style="margin:0 0 6px;font-size:13px;font-weight:800" id="daWAsubj"></p>
+              <p style="margin:0 0 10px;font-size:12.5px;color:#3b4a54;line-height:1.5" id="daWAtxt"></p>
+              <button class="btn btn-primary da-full" type="button" id="daWAbtn" style="background:#075E54;border-color:#075E54">Buka &amp; tugaskan</button>
+              <p style="margin:9px 0 0;font-size:11px;color:#8a9199">Tautan aman, sekali pakai, berlaku 24 jam &mdash; membuka halaman konfirmasi yang sama.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Push aksi (muncul bila kanal termasuk Push) -->
+        <div id="daPush" hidden style="margin-top:12px">
+          <div style="display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 12px;box-shadow:0 2px 8px rgba(16,24,40,.06)">
+            <span style="width:30px;height:30px;border-radius:8px;background:var(--brand);display:grid;place-items:center;flex:none" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:6px"><b style="font-size:12.5px">MM2100 Pengelola</b><small style="color:var(--faint);font-size:11px">&middot; push &middot; sekarang</small><span style="margin-left:auto;font-size:10.5px;font-weight:800;background:var(--signal-soft);color:#8A5A00;padding:1px 8px;border-radius:999px">Push</span></div>
+              <p style="margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45" id="daPushtxt"></p>
+              <button class="btn btn-primary btn-sm" type="button" id="daPushBtn" style="margin-top:9px">Tindak sekarang</button>
+            </div>
           </div>
         </div>
 
@@ -2909,6 +2947,175 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
   </div>
 </main>
 
+<style>
+.tk-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;margin-top:18px}
+.tkp{width:306px;max-width:100%;margin:0 auto;background:#0A2A5E;border-radius:40px;padding:9px;box-shadow:0 24px 54px rgba(10,42,94,.3)}
+.tkp-notch{width:120px;height:20px;background:#0A2A5E;border-radius:0 0 16px 16px;margin:0 auto -4px;position:relative;z-index:2}
+.tkp-scr{background:#F5F8FC;border-radius:32px;overflow:hidden;min-height:534px;display:flex;flex-direction:column}
+.tkp-top{background:var(--brand);color:#fff;padding:26px 18px 15px}
+.tkp-app{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px}
+.tkp-user{display:block;font-size:12.5px;opacity:.88;margin-top:3px}
+.tkp-body{padding:15px;flex:1;display:flex;flex-direction:column;gap:12px}
+.tk-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}
+.tk-card .tk-no{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.tk-card h3{font-size:16px;margin:7px 0 4px;line-height:1.3}
+.tk-card .tk-from{font-size:12.5px;color:var(--muted)}
+.tk-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.tk-loc{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);margin-top:11px}
+.tk-loc svg{width:16px;height:16px;flex:none;margin-top:1px;color:var(--brand-ink)}
+.tk-count{display:inline-flex;align-items:center;gap:7px;background:#FFF4D6;color:#8A5A00;font-weight:800;border-radius:999px;padding:4px 11px;font-size:13px;font-variant-numeric:tabular-nums}
+.tk-row2{display:flex;gap:9px}
+.tk-row2 .btn{flex:1;justify-content:center;padding-inline:10px}
+.btn-reject{background:#fff;color:#B42318;border:1px solid #F3B4AE}
+.btn-reject:hover{background:#FDE8E7}
+.btn-accept{background:#1B8A4B;color:#fff}
+.btn-accept:hover{background:#176e3d}
+.tk-note{font-size:12.5px;color:var(--muted);background:var(--subtle);border:1px solid var(--line);border-radius:11px;padding:10px 12px;line-height:1.5}
+.tk-note b{color:var(--ink)}
+.tk-bignote{display:flex;gap:10px;align-items:flex-start;border-radius:14px;padding:13px 14px;font-size:13.5px;font-weight:600;line-height:1.4}
+.tk-bignote svg{width:20px;height:20px;flex:none}
+.tk-ok{background:var(--ok-bg);color:var(--ok-ink)}
+.tk-warn{background:#FEF3DC;color:#8A5A00}
+.tk-bad{background:#FDE8E7;color:#B42318}
+.tk-steps{list-style:none;margin:4px 0 0;padding:0}
+.tk-steps li{display:flex;gap:11px;padding:6px 0;font-size:13px;align-items:flex-start}
+.tk-steps li .d{width:15px;height:15px;border-radius:50%;background:var(--line-strong);flex:none;margin-top:2px}
+.tk-steps li.ok .d{background:#1B8A4B}
+.tk-steps li.now .d{background:var(--brand);box-shadow:0 0 0 4px var(--brand-soft)}
+.tk-steps li b{font-weight:700}.tk-steps li small{display:block;color:var(--muted);font-size:12px}
+.tk-steps li time{margin-left:auto;font-size:11.5px;color:var(--faint,#667085);white-space:nowrap}
+.tk-switch{display:flex;gap:7px;flex-wrap:wrap;border:0;padding:0;margin:0}
+.tk-switch button{font:inherit;font-weight:700;font-size:13px;border:1px solid var(--line-strong);background:#fff;border-radius:999px;padding:8px 15px;cursor:pointer;color:var(--muted)}
+.tk-switch button[aria-pressed="true"]{background:var(--brand-ink);color:#fff;border-color:var(--brand-ink)}
+.tk-rules{list-style:none;margin:0;padding:0}
+.tk-rules li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tk-rules li:last-child{border-bottom:0}
+.tk-rules .rk{font-weight:800;font-size:13px;color:var(--brand-ink);background:var(--brand-soft);border-radius:8px;padding:4px 9px;flex:none;align-self:flex-start;white-space:nowrap}
+.tk-rules b{font-size:14px}.tk-rules p{margin:2px 0 0;color:var(--muted);font-size:13px}
+@media(max-width:800px){.tk-grid{grid-template-columns:1fr}}
+</style>
+
+<main id="demoTeknisi" class="detail" hidden aria-labelledby="dtk-title">
+  <div class="wrap">
+    <div class="da-top">
+      <div>
+        <p class="da-eyebrow"><span class="sevpill sev-info">Mode demo</span> Sisi teknisi lapangan · aplikasi terpisah</p>
+        <h1 id="dtk-title">Aplikasi teknisi</h1>
+        <p class="dt-sub">Begini tampilan saat tugas masuk ke teknisi: terima, tolak, atau — kalau didiamkan — tugas otomatis kembali ke supervisor untuk dialihkan.</p>
+      </div>
+      <a class="btn btn-neutral" href="#">Keluar dari demo</a>
+    </div>
+
+    <fieldset class="da-scen">
+      <legend>Pilih keadaan tugas</legend>
+      <div class="tk-switch" role="group" aria-label="Keadaan tugas teknisi">
+        <button type="button" data-tkst="masuk" aria-pressed="true">Tugas masuk</button>
+        <button type="button" data-tkst="terima" aria-pressed="false">Diterima</button>
+        <button type="button" data-tkst="tolak" aria-pressed="false">Ditolak</button>
+        <button type="button" data-tkst="diam" aria-pressed="false">Tidak direspons</button>
+      </div>
+    </fieldset>
+
+    <div class="tk-grid">
+      <!-- Phone mockup -->
+      <div class="tkp" aria-label="Pratinjau aplikasi teknisi">
+        <div class="tkp-notch" aria-hidden="true"></div>
+        <div class="tkp-scr">
+          <div class="tkp-top">
+            <span class="tkp-app"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-6 0v4M5 9h14l1 12H4z"/></svg>Teknisi MM2100</span>
+            <span class="tkp-user">Teknisi A · Tim Utilitas zona utara</span>
+          </div>
+          <div class="tkp-body">
+
+            <!-- STATE: masuk -->
+            <div data-tkscr="masuk">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <span class="pill pill-blue"><span class="pdot" aria-hidden="true"></span>Tugas baru</span>
+                <span class="tk-count"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>04:38</span>
+              </div>
+              <div class="tk-card">
+                <span class="tk-no">LP-2026-0414</span>
+                <h3>Tekanan air bersih rendah di blok utara</h3>
+                <p class="tk-from">Dari Supervisor Roni · 08.41</p>
+                <div class="tk-chips"><span class="pill pill-gray">Air bersih</span><span class="pill pill-gray">Zona utara</span></div>
+                <div class="tk-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Blok C, dekat gerbang utara · 1,2 km dari posisi Anda</span></div>
+              </div>
+              <div class="tk-row2" style="margin-top:12px">
+                <button class="btn btn-reject" type="button" data-tkgo="tolak">Tolak</button>
+                <button class="btn btn-accept" type="button" data-tkgo="terima"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Terima tugas</button>
+              </div>
+              <p class="tk-note" style="margin-top:12px"><b>Belum direspons.</b> Jika tidak dijawab dalam 5 menit, tugas otomatis dikembalikan ke supervisor untuk dialihkan ke teknisi lain.</p>
+            </div>
+
+            <!-- STATE: terima -->
+            <div data-tkscr="terima" hidden>
+              <div class="tk-bignote tk-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Tugas diterima · 08.43</div>
+              <div class="tk-card" style="margin-top:12px">
+                <span class="tk-no">LP-2026-0414 · Air bersih</span>
+                <h3 style="font-size:15px">Tekanan air bersih rendah di blok utara</h3>
+                <ul class="tk-steps">
+                  <li class="ok"><span class="d"></span><span><b>Diterima</b><small>Anda menerima tugas</small></span><time>08.43</time></li>
+                  <li class="now"><span class="d"></span><span><b>Menuju lokasi</b><small>Perkiraan tiba 12 menit</small></span><time>08.43</time></li>
+                  <li><span class="d"></span><span><b>Di lokasi &amp; penanganan</b></span></li>
+                  <li><span class="d"></span><span><b>Selesai</b></span></li>
+                </ul>
+              </div>
+              <div class="tk-row2" style="margin-top:12px">
+                <button class="btn btn-outline" type="button" data-toast2="Peta dibuka (mockup).">Buka peta</button>
+                <button class="btn btn-primary" type="button" data-toast2="Ditandai tiba di lokasi (mockup).">Tandai tiba</button>
+              </div>
+              <p class="tk-note" style="margin-top:12px">Tenant pelapor otomatis dikabari: <b>Petugas menuju lokasi</b>. Supervisor melihat tugas sudah diterima.</p>
+            </div>
+
+            <!-- STATE: tolak -->
+            <div data-tkscr="tolak" hidden>
+              <div class="tk-bignote tk-bad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Tugas ditolak · 08.42</div>
+              <div class="tk-card" style="margin-top:12px">
+                <span class="tk-no">LP-2026-0414 · Air bersih</span>
+                <h3 style="font-size:15px">Tekanan air bersih rendah di blok utara</h3>
+                <p class="tk-from" style="margin-top:8px">Alasan penolakan</p>
+                <div class="tk-chips"><span class="pill pill-amber"><span class="pdot" aria-hidden="true"></span>Sedang menangani tugas lain</span></div>
+              </div>
+              <p class="tk-note" style="margin-top:12px"><b>Dikembalikan ke supervisor.</b> Tugas akan dialihkan ke teknisi lain. Anda tidak lagi bertanggung jawab atas laporan ini.</p>
+            </div>
+
+            <!-- STATE: diam -->
+            <div data-tkscr="diam" hidden>
+              <div class="tk-bignote tk-warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Tidak ada respons · waktu habis</div>
+              <div class="tk-card" style="margin-top:12px">
+                <span class="tk-no">LP-2026-0414 · Air bersih</span>
+                <h3 style="font-size:15px">Tekanan air bersih rendah di blok utara</h3>
+                <ul class="tk-steps">
+                  <li class="ok"><span class="d"></span><span><b>Tugas masuk</b><small>Notifikasi + WhatsApp + push</small></span><time>08.41</time></li>
+                  <li class="ok"><span class="d"></span><span><b>Pengingat dikirim</b><small>Belum dibuka teknisi</small></span><time>08.44</time></li>
+                  <li class="ok"><span class="d"></span><span><b>Waktu respons habis</b><small>5 menit tanpa jawaban</small></span><time>08.46</time></li>
+                  <li class="now"><span class="d"></span><span><b>Kembali ke supervisor</b><small>Siap dialihkan ke teknisi lain</small></span><time>08.46</time></li>
+                </ul>
+              </div>
+              <p class="tk-note" style="margin-top:12px"><b>Teknisi diam = tugas tidak menggantung.</b> Sistem menariknya kembali ke supervisor. Untuk laporan darurat, tenggatnya lebih pendek dan langsung eskalasi ke atasan.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Explanation -->
+      <section class="dt-card" aria-labelledby="tkr-title">
+        <h2 id="tkr-title" style="font-size:17px;margin-bottom:4px">Aturan respons teknisi</h2>
+        <p class="dt-sub" style="margin:0 0 6px">Apa yang terjadi di tiap keadaan — supaya tidak ada tugas yang menggantung.</p>
+        <ul class="tk-rules">
+          <li><span class="rk">Terima</span><div><b>Langsung jalan</b><p>Status tenant berubah jadi "Petugas menuju lokasi", supervisor lihat tugas sudah diterima.</p></div></li>
+          <li><span class="rk">Tolak</span><div><b>Wajib pilih alasan</b><p>Tugas kembali ke supervisor dan dialihkan ke teknisi lain. Alasan tercatat untuk evaluasi beban.</p></div></li>
+          <li><span class="rk">Diam 5 mnt</span><div><b>Pengingat otomatis</b><p>Teknisi diingatkan lewat push &amp; WhatsApp. Tugas tetap tercatat "belum direspons".</p></div></li>
+          <li><span class="rk">Diam 8 mnt</span><div><b>Kembali ke supervisor</b><p>Tugas ditarik otomatis dan masuk lagi ke antrean penugasan supervisor.</p></div></li>
+          <li><span class="rk">Darurat</span><div><b>Tenggat lebih pendek</b><p>Waktu respons dipersingkat dan langsung eskalasi ke atasan bila didiamkan.</p></div></li>
+        </ul>
+        <p class="help-mini" style="margin-top:8px">Alur, nama, dan tenggat di mockup ini adalah contoh. Tenggat respons &amp; eskalasi diatur di dashboard pengelola.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
 <footer class="site-footer">
   <div class="wrap">
     <div class="foot-grid">
@@ -2938,6 +3145,9 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
   <button type="button" data-mode="guest" aria-pressed="false">Tamu</button>
   <button type="button" data-mode="member" aria-pressed="true">Sudah masuk</button>
   <button type="button" data-mode="assign" aria-pressed="false">Auto-assign &amp; email aksi</button>
+  <button type="button" data-mode="teknisi" aria-pressed="false">Aplikasi teknisi</button>
+  <span class="demo-sep" aria-hidden="true"></span>
+  <a class="demo-cms" href="cms.html">Dashboard pengelola<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
 </div>
 
 <dialog class="report" id="report" aria-labelledby="dlg-title">
@@ -2965,6 +3175,8 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
           <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Keamanan</button>
           <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Kebersihan &amp; sampah</button>
           <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="7" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="17" r="1.5"/></svg>Lalu lintas &amp; parkir</button>
+          <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.7S6 10 6 14a6 6 0 0 0 12 0c0-4-6-11.3-6-11.3z"/></svg>Air bersih</button>
+          <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg>Kelistrikan</button>
           <button class="cat" type="button" aria-pressed="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>Lainnya</button>
         </div>
       </div>
@@ -3013,6 +3225,13 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
             <span><strong id="fotoLabel">Pilih atau ambil foto</strong><span>PNG atau JPG, maksimal 5 MB</span></span>
           </label>
           <input class="sr-only" id="foto" type="file" accept="image/png,image/jpeg" capture="environment">
+          <img id="fotoPrev" hidden alt="Pratinjau foto kejadian" style="display:block;margin-top:10px;max-height:170px;border-radius:12px;border:1px solid var(--line)">
+        </div>
+        <div class="field">
+          <label for="darurat" style="display:flex;gap:12px;align-items:flex-start;border:1.5px solid #F3B4AE;background:#FDF3F2;border-radius:14px;padding:13px 15px;cursor:pointer;margin:0">
+            <input id="darurat" type="checkbox" style="width:20px;height:20px;margin:2px 0 0;accent-color:#B42318;flex:none">
+            <span><b style="color:#B42318;display:flex;align-items:center;gap:7px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>Tandai sebagai darurat</b><span style="display:block;color:var(--muted);font-size:13.5px;margin-top:3px;font-weight:500">Pakai hanya untuk bahaya langsung, misalnya kabel listrik terbuka, kebocoran, atau kebakaran. Laporan darurat dilewatkan dari auto-assign dan langsung dikirim ke supervisor.</span></span>
+          </label>
         </div>
         <div class="reporter">
           <span><span style="color:var(--muted)">Dilaporkan sebagai</span><b>[Nama Anda], [Perusahaan]</b></span>
@@ -3023,8 +3242,8 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
       <div data-step="4" hidden>
         <div class="done" role="status">
           <span class="check" aria-hidden="true"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-          <h3>Laporan terkirim</h3>
-          <p>Nomor laporan <strong style="color:var(--ink)">LP-2026-0412</strong>. Kami akan mengabari Anda setiap kali statusnya berubah.</p>
+          <h3 id="doneTitle">Laporan terkirim</h3>
+          <p id="doneMsg">Nomor laporan <strong style="color:var(--ink)">LP-2026-0412</strong>. Kami akan mengabari Anda setiap kali statusnya berubah.</p>
           <div class="row" style="justify-content:center">
             <a class="btn btn-primary" href="#laporan-1" data-close>Pantau status laporan</a>
             <button class="btn btn-neutral" type="button" data-close>Kembali ke Beranda</button>
@@ -3067,6 +3286,48 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
   var stepEl=document.getElementById('dlg-step'),bars=document.querySelectorAll('#bars span');
   var next=document.getElementById('next'),back=document.getElementById('back'),foot=document.getElementById('dlgFoot');
 
+  // --- Shared auto-assign engine: tenant report -> CMS (via localStorage) ---
+  var RKEY='mm2100_reports';
+  var CMS_TECH={A:{team:'Tim Utilitas zona utara',load:1,st:'ok'},B:{team:'Tim Utilitas zona utara',load:3,st:'full'},C:{team:'Tim Utilitas zona selatan',load:0,st:'ok'},D:{team:'Tim Utilitas zona utara',load:0,st:'leave'},E:{team:'Tim Kelistrikan',load:1,st:'ok'}};
+  var CMS_RULES={'Penerangan jalan':{pri:'E',bak:'A',limit:3},'Air bersih':{pri:'D',bak:'B',limit:3},'Kelistrikan':{pri:'E',bak:'A',limit:2},'Jalan & drainase':{pri:'C',bak:'A',limit:3},'Keamanan':{team:'Tim Keamanan',limit:4},'Kebersihan & sampah':{team:'Tim Kebersihan',limit:5},'Lalu lintas & parkir':{team:'Tim Keamanan',limit:4},'Lainnya':{team:'Tim Utilitas',limit:3}};
+  function readReports(){try{return JSON.parse(localStorage.getItem(RKEY)||'[]')}catch(e){return []}}
+  function loadOf(id,reps){var n=CMS_TECH[id].load;reps.forEach(function(r){if(r.method==='auto'&&r.to===id)n++});return n}
+  function avail(id,limit,reps){var t=CMS_TECH[id];return !!t&&t.st!=='leave'&&loadOf(id,reps)<limit}
+  function firstAvail(reps){var o='A';['A','C','E','B','D'].some(function(id){if(avail(id,3,reps)){o=id;return true}return false});return o}
+  function teamFamily(id){return ((CMS_TECH[id]||{}).team||'').split(' ').slice(0,2).join(' ')}
+  function pickFromTeam(fam,limit,reps){var out=null;['A','C','E','B','D'].some(function(id){if(teamFamily(id)===fam&&avail(id,limit,reps)){out=id;return true}return false});return out}
+  function decide(cat,darurat,reps){
+    if(darurat)return{method:'darurat',to:'—',by:'Supervisor',reason:'Ditandai darurat oleh pelapor, langsung ke supervisor',saran:firstAvail(reps)};
+    var rule=CMS_RULES[cat];
+    if(!rule)return{method:'manual',to:'—',by:'Supervisor',reason:'Kategori "'+cat+'" belum punya aturan auto-assign, perlu triase manual',saran:firstAvail(reps)};
+    if(rule.team)return{method:'auto',to:rule.team,by:'Sistem',reason:rule.team+' ditugaskan, dalam batas beban'};
+    if(avail(rule.pri,rule.limit,reps))return{method:'auto',to:rule.pri,by:'Sistem',reason:'Teknisi utama cocok & tersedia'};
+    if(avail(rule.bak,rule.limit,reps))return{method:'auto',to:rule.bak,by:'Sistem',reason:'Teknisi utama tak tersedia, cadangan dipakai'};
+    var alt=pickFromTeam(teamFamily(rule.pri),rule.limit,reps);
+    if(alt)return{method:'auto',to:alt,by:'Sistem',reason:'Utama & cadangan sibuk, dialihkan ke Teknisi '+alt+' (satu tim)'};
+    return{method:'manual',to:'—',by:'Supervisor',reason:'Semua teknisi tim ini sedang penuh atau cuti',saran:firstAvail(reps)};
+  }
+  function pad2(n){return (n<10?'0':'')+n}
+  function nowTime(){var d=new Date();return pad2(d.getHours())+'.'+pad2(d.getMinutes())}
+  function labelTo(to){return /^[A-E]$/.test(to)?('Teknisi '+to):to}
+  var lastDecision=null;
+  var located=false,photoData='';
+  function submitReport(){
+    var reps=readReports();
+    var dr=document.getElementById('darurat');var darurat=!!(dr&&dr.checked);
+    var desc=(document.getElementById('deskripsi').value||'').trim();
+    var patokan=(document.getElementById('patokan').value||'').trim();
+    var maps=(document.getElementById('tautan').value||'').trim();
+    var title=desc?desc.replace(/\s+/g,' ').slice(0,70):((cat||'Kejadian')+' dilaporkan tenant');
+    var d=decide(cat,darurat,reps);
+    var rep={no:'LP-2026-0'+(521+reps.length),cat:cat,title:title,zone:'Zona utara',darurat:darurat,method:d.method,to:d.to,by:d.by,reason:d.reason,saran:d.saran||'',time:nowTime(),status:d.method==='auto'?'Petugas menuju lokasi':'Perlu ditugaskan',ts:Date.now(),
+      desc:desc,patokan:patokan,maps:maps,located:located,photo:photoData};
+    reps.push(rep);try{localStorage.setItem(RKEY,JSON.stringify(reps))}catch(e){}
+    /* teruskan ke aplikasi teknisi lewat shared store */
+    try{if(window.MMSync){var tss=(rep.method==='auto')?'menuju':'masuk';MMSync.setStatus(rep.no,{techState:tss,status:rep.status,assignee:(rep.to&&rep.to!=='—'?rep.to:'A'),assigneeName:labelTo(rep.to),title:rep.title,cat:rep.cat,zone:rep.zone,loc:(rep.patokan||rep.zone||'Lihat di peta'),patokan:rep.patokan,crit:!!rep.darurat,at:rep.time,photo:!!rep.photo,eta:12,stamps:(tss==='menuju'?{terima:rep.time}:{})});}}catch(e){}
+    lastDecision=rep;return rep;
+  }
+
   function render(){
     document.querySelectorAll('[data-step]').forEach(function(s){s.hidden=Number(s.dataset.step)!==step});
     stepEl.textContent=labels[step];
@@ -3076,13 +3337,32 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
     back.hidden=step===1;
     next.textContent=step===3?'Kirim laporan':'Lanjut';
     next.disabled=step===1&&!cat;
+    if(step===4){
+      var dt=document.getElementById('doneTitle'),dm=document.getElementById('doneMsg'),r=lastDecision;
+      var link=' <a href="cms.html#'+(r&&r.method==='auto'?'riwayat':'antrean')+'" style="font-weight:700">Lihat di dashboard pengelola &rarr;</a>';
+      if(r&&r.method==='darurat'){
+        dt.textContent='Laporan darurat terkirim';
+        dm.innerHTML='Nomor <strong style="color:var(--ink)">'+r.no+'</strong>. Ditandai <strong style="color:#B42318">darurat</strong>, langsung diteruskan ke supervisor tanpa menunggu auto-assign.'+link;
+      }else if(r&&r.method==='auto'){
+        dt.textContent='Laporan terkirim & ditugaskan otomatis';
+        dm.innerHTML='Nomor <strong style="color:var(--ink)">'+r.no+'</strong>. Ditugaskan otomatis ke <strong style="color:var(--ink)">'+labelTo(r.to)+'</strong>. Status: Petugas menuju lokasi.'+link;
+      }else if(r){
+        dt.textContent='Laporan terkirim';
+        dm.innerHTML='Nomor <strong style="color:var(--ink)">'+r.no+'</strong>. Teknisi utama belum tersedia, laporan diteruskan ke supervisor untuk ditugaskan.'+link;
+      }else{
+        dt.textContent='Laporan terkirim';
+        dm.innerHTML='Nomor laporan terkirim. Kami akan mengabari Anda setiap kali statusnya berubah.';
+      }
+    }
   }
   function reset(){
     step=1;cat=null;
     document.querySelectorAll('.cat').forEach(function(c){c.setAttribute('aria-pressed','false')});
-    document.getElementById('locStatus').hidden=true;
+    document.getElementById('locStatus').hidden=true;located=false;photoData='';
     document.getElementById('fotoLabel').textContent='Pilih atau ambil foto';
+    var fp=document.getElementById('fotoPrev');if(fp)fp.hidden=true;
     ['patokan','tautan','deskripsi','foto'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    var dr=document.getElementById('darurat');if(dr)dr.checked=false;
     render();
   }
   document.querySelectorAll('[data-open-report]').forEach(function(b){
@@ -3101,12 +3381,28 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
       c.setAttribute('aria-pressed','true');cat=c.textContent.trim();render();
     });
   });
-  next.addEventListener('click',function(){ if(!next.disabled){step=Math.min(step+1,4);render();next.blur();} });
+  next.addEventListener('click',function(){ if(next.disabled)return; if(step===3){submitReport();} step=Math.min(step+1,4);render();next.blur(); });
   back.addEventListener('click',function(){ step=Math.max(step-1,1);render(); });
-  document.getElementById('locate').addEventListener('click',function(){document.getElementById('locStatus').hidden=false;});
+  document.getElementById('locate').addEventListener('click',function(){document.getElementById('locStatus').hidden=false;located=true;});
   document.getElementById('foto').addEventListener('change',function(e){
     var f=e.target.files&&e.target.files[0];
     document.getElementById('fotoLabel').textContent=f?f.name:'Pilih atau ambil foto';
+    var prev=document.getElementById('fotoPrev');photoData='';if(prev){prev.hidden=true;}
+    if(!f){return;}
+    var rd=new FileReader();
+    rd.onload=function(ev){
+      var img=new Image();
+      img.onload=function(){
+        var max=560,w=img.width,h=img.height;if(w>max){h=Math.round(h*max/w);w=max;}
+        var cv=document.createElement('canvas');cv.width=w;cv.height=h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        try{photoData=cv.toDataURL('image/jpeg',0.6);}catch(err){photoData=ev.target.result;}
+        if(prev){prev.src=photoData;prev.hidden=false;}
+      };
+      img.onerror=function(){photoData=ev.target.result;if(prev){prev.src=photoData;prev.hidden=false;}};
+      img.src=ev.target.result;
+    };
+    rd.readAsDataURL(f);
   });
   render();
 
@@ -3119,7 +3415,7 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
       document.querySelectorAll('[data-member]').forEach(function(el){el.hidden=!member});
       document.querySelectorAll('.demo-toggle button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.mode===m?'true':'false')});
     }
-    document.querySelectorAll('.demo-toggle button').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.mode==='assign'){location.hash='#demo-assign';return}setMode(b.dataset.mode)})});
+    document.querySelectorAll('.demo-toggle button').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.mode==='assign'){location.hash='#demo-assign';return}if(b.dataset.mode==='teknisi'){location.hash='#demo-teknisi';return}setMode(b.dataset.mode)})});
     document.querySelectorAll('[data-login]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();setMode('member')})});
     setMode('member');
   })();
@@ -3127,10 +3423,10 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
   // Detail laporan: routing + states
   (function(){
     var home=document.getElementById('konten'),detail=document.getElementById('detail');
-    var bill=document.getElementById('tagihan'),lst=document.getElementById('laporanSaya'),lyv=document.getElementById('layanan'),lpv=document.getElementById('layananPesan'),dbv=document.getElementById('dashboard'),pfv=document.getElementById('profil'),bsv=document.getElementById('bookingSaya'),dav=document.getElementById('demoAssign'),ltv=document.getElementById('laporanTenant');
+    var bill=document.getElementById('tagihan'),lst=document.getElementById('laporanSaya'),lyv=document.getElementById('layanan'),lpv=document.getElementById('layananPesan'),dbv=document.getElementById('dashboard'),pfv=document.getElementById('profil'),bsv=document.getElementById('bookingSaya'),dav=document.getElementById('demoAssign'),ltv=document.getElementById('laporanTenant'),tkv=document.getElementById('demoTeknisi');
     function route(){
-      var h=location.hash,d=/^#laporan-(1|detail)/.test(h),t=/^#tagihan/.test(h),l=/^#laporan-saya/.test(h),ly=/^#layanan$/.test(h),lp=/^#layanan-pesan/.test(h),db=/^#dashboard/.test(h),pf=/^#profil/.test(h),bs=/^#booking-saya/.test(h),da=/^#demo-assign/.test(h),lt=/^#laporan-tenant/.test(h),sub=d||t||l||ly||lp||db||pf||bs||da||lt;
-      home.hidden=sub;detail.hidden=!d;bill.hidden=!t;lst.hidden=!l;lyv.hidden=!ly;lpv.hidden=!lp;dbv.hidden=!db;pfv.hidden=!pf;bsv.hidden=!bs;dav.hidden=!da;ltv.hidden=!lt;
+      var h=location.hash,d=/^#laporan-(1|detail)/.test(h),t=/^#tagihan/.test(h),l=/^#laporan-saya/.test(h),ly=/^#layanan$/.test(h),lp=/^#layanan-pesan/.test(h),db=/^#dashboard/.test(h),pf=/^#profil/.test(h),bs=/^#booking-saya/.test(h),da=/^#demo-assign/.test(h),lt=/^#laporan-tenant/.test(h),tk=/^#demo-teknisi/.test(h),sub=d||t||l||ly||lp||db||pf||bs||da||lt||tk;
+      home.hidden=sub;detail.hidden=!d;bill.hidden=!t;lst.hidden=!l;lyv.hidden=!ly;lpv.hidden=!lp;dbv.hidden=!db;pfv.hidden=!pf;bsv.hidden=!bs;dav.hidden=!da;ltv.hidden=!lt;if(tkv)tkv.hidden=!tk;
       var dt=document.querySelector('.demo-toggle');if(dt)dt.hidden=sub;
       if(sub){var mb=document.querySelector('.demo-toggle button[data-mode="member"]');if(mb&&mb.getAttribute('aria-pressed')!=='true')mb.click();}
       var b=document.querySelector('.nav a[href="#"]');if(b){if(sub)b.removeAttribute('aria-current');else b.setAttribute('aria-current','page');}
@@ -3181,7 +3477,16 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
       li.innerHTML='<span class="avatar avatar-sm" aria-hidden="true">RS</span><div class="msg-b"><p class="msg-h"><b>Anda</b><time>Baru saja</time></p><p></p></div>';
       li.querySelector('.msg-b p:last-child').textContent=t;$('thread').appendChild(li);$('replyTxt').value='';
     });
-    setState('proses');route();
+    /* ---------- sinkron status dari aplikasi teknisi / CMS (shared store) ---------- */
+    var HERO='LP-2026-0415';
+    function applySync(){
+      if(!window.MMSync)return;
+      var s=MMSync.getStatus(HERO);if(!s||!s.status)return;
+      if(s.status==='Selesai')setState('konfirmasi');
+      else setState('proses');
+    }
+    if(window.MMSync){MMSync.onChange(function(){applySync()});}
+    setState('proses');applySync();route();
   })();
 
   // Tagihan
@@ -3388,33 +3693,47 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
         ['done','Teknisi E menerima tugas','Notifikasi di aplikasi teknisi','08.41'],
         ['done','Tenant pelapor dikabari','Status: Petugas menuju lokasi','08.41'],
         ['ok','Supervisor menerima ringkasan','Masuk ringkasan per jam, tanpa perlu tindakan','09.00']],
-        mail:{subj:'[Ringkasan] 3 laporan ditugaskan otomatis, 08.00 sampai 09.00',chip:['sev-info','Info, tanpa tindakan'],h:'Laporan yang ditugaskan otomatis',why:'Termasuk LP-2026-0415 yang ditugaskan ke Teknisi E. Ubah teknisi jika perlu.',fyi:true,time:'09.00'},tech:4,dur:'Kurang dari 1 menit, otomatis'},
+        mail:{subj:'[Ringkasan] 3 laporan ditugaskan otomatis, 08.00 sampai 09.00',chip:['sev-info','Info, tanpa tindakan'],h:'Laporan yang ditugaskan otomatis',why:'Termasuk LP-2026-0415 yang ditugaskan ke Teknisi E. Ubah teknisi jika perlu.',fyi:true,time:'09.00',ch:['Email']},tech:4,dur:'Kurang dari 1 menit, otomatis'},
       manual:{no:'LP-2026-0414',t:'Tekanan air bersih rendah di blok utara',m:'Air bersih. Masuk 28 Okt, 08.40. 6 tenant terdampak',steps:[
         ['ok','Tenant mengirim laporan','LP-2026-0414, Air bersih','08.40'],
         ['dec','Sistem mencocokkan aturan','Utilitas zona utara: Teknisi D (utama), Teknisi B (cadangan)','08.40'],
         ['alert','Tidak bisa auto-assign','Teknisi D cuti, Teknisi B sudah 3 tugas aktif','08.40'],
-        ['ok','Email aksi dikirim ke supervisor','Berisi alasan dan saran Teknisi A','08.41'],
+        ['ok','Email, WhatsApp, dan push aksi dikirim','Ke supervisor, dengan alasan dan saran Teknisi A. Semua tombol membuka halaman konfirmasi yang sama','08.41'],
         ['wait','Menunggu tindakan supervisor','Pengingat otomatis jika belum ditindak dalam 30 menit','']],
-        mail:{subj:'[Perlu ditugaskan] LP-2026-0414 Tekanan air rendah di blok utara',chip:['sev-warn','Perlu penugasan manual'],h:'Laporan baru perlu ditugaskan',why:'Kenapa perlu Anda: teknisi utama zona ini sedang cuti dan teknisi cadangan sedang menangani 3 tugas.',fyi:false,time:'08.41'},tech:0},
+        mail:{subj:'[Perlu ditugaskan] LP-2026-0414 Tekanan air rendah di blok utara',chip:['sev-warn','Perlu penugasan manual'],h:'Laporan baru perlu ditugaskan',why:'Kenapa perlu Anda: teknisi utama zona ini sedang cuti dan teknisi cadangan sedang menangani 3 tugas.',fyi:false,time:'08.41',ch:['Email','WhatsApp','Push']},tech:0},
       urgent:{no:'LP-2026-0416',t:'Kabel listrik terbuka dekat area parkir truk',m:'Kelistrikan. Ditandai darurat. Masuk 28 Okt, 08.40',steps:[
         ['ok','Tenant mengirim laporan','LP-2026-0416, ditandai darurat oleh pelapor','08.40'],
         ['alert','Aturan: laporan darurat selalu ke supervisor','Tidak menunggu auto-assign','08.40'],
-        ['ok','Email dan WhatsApp aksi dikirim','Ke supervisor, dengan saran Teknisi E','08.40'],
+        ['ok','Email, WhatsApp, dan push aksi dikirim','Ke supervisor, dengan saran Teknisi E','08.40'],
         ['wait','Menunggu tindakan supervisor','Eskalasi ke [nama atasan] jika belum ditindak dalam 10 menit','']],
-        mail:{subj:'[DARURAT] LP-2026-0416 Kabel listrik terbuka dekat area parkir truk',chip:['sev-crit-solid','Darurat'],h:'Laporan darurat perlu ditugaskan sekarang',why:'Pelapor menandai laporan ini darurat. Tenant di sekitar lokasi sudah diminta menjauhi area.',fyi:false,time:'08.40'},tech:4}
+        mail:{subj:'[DARURAT] LP-2026-0416 Kabel listrik terbuka dekat area parkir truk',chip:['sev-crit-solid','Darurat'],h:'Laporan darurat perlu ditugaskan sekarang',why:'Pelapor menandai laporan ini darurat. Tenant di sekitar lokasi sudah diminta menjauhi area.',fyi:false,time:'08.40',ch:['Email','WhatsApp','Push']},tech:4}
     };
     var cur=null,sel=0,t0=0;
     function scen(){return document.querySelector('input[name="daScen"]:checked').value}
-    function clear(){timers.forEach(clearTimeout);timers=[];$('daLog').innerHTML='';$('daLogEmpty').hidden=false;$('daMail').hidden=true;$('daInboxEmpty').hidden=false;$('daBadge').hidden=true;$('daConf').hidden=true;$('daResult').hidden=true}
+    function clear(){timers.forEach(clearTimeout);timers=[];$('daLog').innerHTML='';$('daLogEmpty').hidden=false;$('daMail').hidden=true;$('daInboxEmpty').hidden=false;$('daBadge').hidden=true;$('daConf').hidden=true;$('daResult').hidden=true;var w=$('daWA');if(w)w.hidden=true;var p=$('daPush');if(p)p.hidden=true}
     function addStep(st){var li=document.createElement('li');var labels={ok:'',dec:'?',wait:'',done:'',alert:'!'};
       li.innerHTML='<span class="da-dot k-'+st[0]+'" aria-hidden="true"></span><div><b></b><small></small><time></time></div>';
       li.querySelector('.da-dot').textContent=labels[st[0]];if(st[0]==='ok'||st[0]==='done')li.querySelector('.da-dot').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
       li.querySelector('b').textContent=st[1];li.querySelector('small').textContent=st[2];li.querySelector('time').textContent=st[3];$('daLog').appendChild(li)}
+    function chanChip(c){
+      var paths={Email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',WhatsApp:'<path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2z"/><path d="M8.5 8.8c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .6.5l.6 1.4c.1.2 0 .4 0 .5l-.4.5c-.2.2-.3.3-.1.6a6 6 0 0 0 2.7 2.4c.3.1.5.1.7-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.2.4.5 0 .5-.5 1.3-1 1.5-.5.2-1.8.4-3.6-.9a8 8 0 0 1-3-3.4c-.3-.7-.5-1.6-.1-2.4z"/>',Push:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/>'};
+      var col=c==='WhatsApp'?'#1DAA61':(c==='Push'?'#B76E00':'#0057D9');
+      return '<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 8px;color:'+col+';background:#fff"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[c]+'</svg>'+c+'</span>';
+    }
     function showMail(){var m=cur.mail;$('daInboxEmpty').hidden=true;$('daMail').hidden=false;$('daBadge').hidden=false;
       $('daSubj').textContent=m.subj;$('daTime').textContent='28 Okt 2026, '+m.time;var c=$('daChip');c.className='sevpill '+m.chip[0];c.textContent=m.chip[1];
+      var chEl=$('daCh');if(m.ch&&m.ch.length){chEl.hidden=false;chEl.innerHTML='<span style="font-size:12px;color:var(--muted);font-weight:700">Dikirim lewat</span>'+m.ch.map(chanChip).join('')}else{chEl.hidden=true;chEl.innerHTML=''}
       $('daH').textContent=m.h;$('daWhy').textContent=m.why;$('daNo').textContent=cur.no;$('daRepT').textContent=cur.t;$('daRepM').textContent=cur.m;
       $('daSug').hidden=m.fyi;$('daFyi').hidden=!m.fyi;$('daFine').hidden=m.fyi;$('daExpire').hidden=m.fyi;
-      var t=TECH[cur.tech];$('daSugAv').textContent=t[1];$('daSugN').textContent=t[0];$('daSugM').textContent=t[2]+', '+t[3].toLowerCase();$('daAssign').textContent='Assign ke '+t[0]}
+      var t=TECH[cur.tech];$('daSugAv').textContent=t[1];$('daSugN').textContent=t[0];$('daSugM').textContent=t[2]+', '+t[3].toLowerCase();$('daAssign').textContent='Assign ke '+t[0];showChannels()}
+    function showChannels(){
+      var ch=(cur&&cur.mail&&cur.mail.ch)||[];
+      var wa=$('daWA'),pu=$('daPush');if(!wa||!pu)return;
+      var hasWA=ch.indexOf('WhatsApp')>-1,hasPush=ch.indexOf('Push')>-1;
+      wa.hidden=!hasWA;pu.hidden=!hasPush;
+      if(hasWA){$('daWAsubj').textContent=cur.mail.chip[1]+' · '+cur.no;$('daWAtxt').textContent=cur.t+'. '+cur.mail.why;}
+      if(hasPush){$('daPushtxt').textContent=cur.mail.chip[1]+' — '+cur.no+' '+cur.t;}
+    }
     function run(){clear();cur=S[scen()];sel=cur.tech;$('daLogEmpty').hidden=true;var d=reduce?0:650;
       cur.steps.forEach(function(st,i){timers.push(setTimeout(function(){addStep(st);
         if(i===cur.steps.length-1||(cur.mail.fyi===false&&st[1].indexOf('dikirim')>-1)){}
@@ -3425,16 +3744,18 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
       b.innerHTML='<span class="avatar avatar-sm" aria-hidden="true"></span><span><b></b><small></small></span><span class="pill"><span class="pdot" aria-hidden="true"></span></span>';
       b.querySelector('.avatar').textContent=t[1];b.querySelector('b').textContent=t[0];b.querySelector('small').textContent=t[2];var p=b.querySelector('.pill');p.classList.add(t[4]);p.appendChild(document.createTextNode(t[3]));
       b.addEventListener('click',function(){sel=i;techs()});box.appendChild(b)});$('daDo').textContent='Tugaskan ke '+TECH[sel][0]}
-    function openConf(step){$('daMail').hidden=true;$('daConf').hidden=false;$('daStep1').hidden=step!==1;$('daStep2').hidden=step!==2;$('daStep3').hidden=step!==3;if(step===1){$('daCRep').textContent=cur.no+'. '+cur.t;techs()}}
+    function openConf(step){$('daMail').hidden=true;var _w=$('daWA');if(_w)_w.hidden=true;var _p=$('daPush');if(_p)_p.hidden=true;$('daConf').hidden=false;$('daStep1').hidden=step!==1;$('daStep2').hidden=step!==2;$('daStep3').hidden=step!==3;if(step===1){$('daCRep').textContent=cur.no+'. '+cur.t;techs()}}
     $('daRun').addEventListener('click',run);
     $('daReset').addEventListener('click',function(){clear()});
     document.querySelectorAll('input[name="daScen"]').forEach(function(r){r.addEventListener('change',clear)});
     $('daAssign').addEventListener('click',function(){sel=cur.tech;openConf(1)});
+    var _wab=$('daWAbtn');if(_wab)_wab.addEventListener('click',function(){sel=cur.tech;openConf(1)});
+    var _pub=$('daPushBtn');if(_pub)_pub.addEventListener('click',function(){sel=cur.tech;openConf(1)});
     $('daOther').addEventListener('click',function(){sel=cur.tech;openConf(1);var f=$('daTechs').querySelector('button:not([disabled])');if(f)f.focus()});
     $('daChange').addEventListener('click',function(e){e.preventDefault();sel=cur.tech;openConf(1)});
     $('daExpire').addEventListener('click',function(){openConf(3)});
-    $('daBack').addEventListener('click',function(){$('daConf').hidden=true;$('daMail').hidden=false});
-    $('daBack2').addEventListener('click',function(){$('daConf').hidden=true;$('daMail').hidden=false});
+    $('daBack').addEventListener('click',function(){$('daConf').hidden=true;$('daMail').hidden=false;showChannels()});
+    $('daBack2').addEventListener('click',function(){$('daConf').hidden=true;$('daMail').hidden=false;showChannels()});
     $('daDo').addEventListener('click',function(){var t=TECH[sel][0];openConf(2);$('daOkTxt').textContent=cur.no+' ditugaskan ke '+t+'. Teknisi dan tenant pelapor sudah dikabari.';
       var log=$('daLog'),w=log.querySelector('.k-wait');if(w){var li=w.closest('li');li.querySelector('.da-dot').className='da-dot k-ok';li.querySelector('.da-dot').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';li.querySelector('b').textContent='Supervisor menugaskan lewat email';li.querySelector('small').textContent='Dua ketukan, tanpa login';li.querySelector('time').textContent='08.43'}
       var before=log.children.length;addStep(['done',t+' menerima tugas','Notifikasi di aplikasi teknisi','08.43']);addStep(['done','Tenant pelapor dikabari','Status: Petugas menuju lokasi','08.43']);undo={li:w?w.closest('li'):null,n:log.children.length-before};
@@ -3442,6 +3763,22 @@ dialog.cal::backdrop{background:rgba(8,18,28,.6)}
     var undo=null;
     $('daUndo').addEventListener('click',function(){var log=$('daLog');if(undo){for(var k=0;k<undo.n;k++)log.removeChild(log.lastElementChild);if(undo.li){var dt=undo.li.querySelector('.da-dot');dt.className='da-dot k-wait';dt.innerHTML='';undo.li.querySelector('b').textContent='Menunggu tindakan supervisor';undo.li.querySelector('small').textContent='Penugasan dibatalkan, pilih ulang teknisi';undo.li.querySelector('time').textContent=''}undo=null}openConf(1);$('daResult').hidden=true});
   })();
+  // Demo: technician app states
+  (function(){
+    var $=function(id){return document.getElementById(id)};
+    var btns=document.querySelectorAll('[data-tkst]');if(!btns.length)return;
+    function set(st){
+      document.querySelectorAll('[data-tkst]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.tkst===st?'true':'false')});
+      document.querySelectorAll('[data-tkscr]').forEach(function(s){s.hidden=s.dataset.tkscr!==st});
+    }
+    btns.forEach(function(b){b.addEventListener('click',function(){set(b.dataset.tkst)})});
+    document.querySelectorAll('[data-tkgo]').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.tkgo)})});
+    var tEl=$('toast'),tT;
+    document.querySelectorAll('[data-toast2]').forEach(function(b){b.addEventListener('click',function(){if(!tEl)return;tEl.textContent=b.dataset.toast2;tEl.hidden=false;clearTimeout(tT);tT=setTimeout(function(){tEl.hidden=true},2200)})});
+    window.addEventListener('hashchange',function(){if(/^#demo-teknisi/.test(location.hash))set('masuk')});
+    set('masuk');
+  })();
+
   // Hero carousel
   (function(){
     var slides=[].slice.call(document.querySelectorAll('.slide')),dots=[].slice.call(document.querySelectorAll('.dots button'));

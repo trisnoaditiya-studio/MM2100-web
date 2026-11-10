@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0057D9">
+<meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Teknisi">
+<meta http-equiv="Cache-Control" content="no-store">
+<link rel="apple-touch-icon" href="teknisi-icon.svg">
+<link rel="icon" href="teknisi-icon.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<title>MM2100 Teknisi Lapangan</title>
+<meta name="description" content="Aplikasi lapangan teknisi kawasan MM2100: terima tugas, navigasi lokasi, dan update status penanganan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#0057D9;--brand-deep:#0A2A5E;--brand-ink:#0047B3;--brand-soft:#EAF1FD;
+  --signal:#F2A900;--signal-ink:#2A1D00;--signal-soft:#FFF4D6;
+  --surface:#FFFFFF;--subtle:#F5F8FC;--ink:#101828;--muted:#475467;--faint:#667085;
+  --line:#E4E7EC;--line-strong:#C5CCD6;
+  --ok-bg:#E6F4EB;--ok-ink:#1B5E34;--ok:#1B8A4B;--warn-bg:#FEF3DC;--warn-ink:#8A5A00;
+  --crit-bg:#FDE8E7;--crit-ink:#B42318;--crit:#D92D20;
+  --radius-lg:18px;--radius:14px;--radius-sm:10px;
+  --font:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --shell:460px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#D7E0EC;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,h4{margin:0;letter-spacing:-.01em}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px;border-radius:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ===== App shell (phone-sized, centered on desktop) ===== */
+.app{
+  max-width:var(--shell);margin:0 auto;background:var(--subtle);
+  min-height:100vh;min-height:100dvh;position:relative;display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px rgba(16,24,40,.05),0 30px 80px rgba(10,42,94,.18);overflow:hidden
+}
+@media(min-width:520px){.app{min-height:860px;margin:24px auto;border-radius:34px}}
+
+/* ===== App bar ===== */
+.appbar{
+  position:sticky;top:0;z-index:20;background:var(--brand);color:#fff;
+  padding:calc(12px + env(safe-area-inset-top)) 16px 12px;display:flex;align-items:center;gap:11px
+}
+.ab-logo{width:40px;height:40px;border-radius:11px;background:rgba(255,255,255,.14);display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.02em;flex:none;border:1px solid rgba(255,255,255,.18)}
+.ab-brand b{display:block;font-size:15.5px;line-height:1.15}
+.ab-brand small{display:block;font-size:11.5px;opacity:.82;font-weight:600;letter-spacing:.02em}
+.ab-bell{margin-left:auto;width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center;position:relative}
+.ab-bell .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 2px var(--brand)}
+
+/* ===== Shift strip ===== */
+.shift{background:var(--brand-deep);color:#fff;padding:11px 16px;display:flex;align-items:center;gap:10px;font-size:13px}
+.shift .s-dot{width:9px;height:9px;border-radius:50%;background:#49D17E;box-shadow:0 0 0 4px rgba(73,209,126,.22);flex:none}
+.shift.off .s-dot{background:#98A2B3;box-shadow:0 0 0 4px rgba(152,162,179,.22)}
+.shift b{font-weight:700}
+.shift small{opacity:.78;display:block;font-size:11.5px}
+.sw-toggle{margin-left:auto;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:12.5px;border-radius:999px;padding:6px 13px}
+
+/* ===== Scroll body ===== */
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 92px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin:2px 2px 10px}
+.sec-head h1{font-size:19px}
+.sec-head .muted{color:var(--muted);font-size:12.5px;font-weight:600}
+
+/* ===== Segment ===== */
+.seg{display:flex;gap:4px;background:#EAEFF6;border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13px;padding:8px 6px;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.12)}
+.seg .cnt{font-size:11px;font-weight:800;background:var(--brand-soft);color:var(--brand-ink);border-radius:999px;padding:0 6px;min-width:17px;text-align:center}
+.seg button[aria-selected="true"] .cnt{background:var(--brand);color:#fff}
+
+/* ===== Pills ===== */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 9px;border-radius:999px;white-space:nowrap;line-height:1.3}
+.pdot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.pill-blue{background:var(--brand-soft);color:var(--brand-ink)}
+.pill-amber{background:var(--signal-soft);color:#7A4A00}
+.pill-green{background:var(--ok-bg);color:var(--ok-ink)}
+.pill-red{background:#FDECEC;color:var(--crit-ink)}
+.pill-gray{background:#EEF2F6;color:#475467}
+
+/* ===== Task card ===== */
+.tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.tcard.crit{border-color:#F3B4AE;box-shadow:0 0 0 1px #F8CFC9 inset}
+.tc-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.tc-no{font-size:11.5px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.tc-top .pill{margin-left:auto}
+.tcard h3{font-size:15.5px;line-height:1.3;margin:0 0 9px}
+.tc-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--muted);background:var(--subtle);border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.chip svg{width:13px;height:13px}
+.tc-loc{display:flex;gap:7px;align-items:flex-start;font-size:13px;color:var(--muted);margin-bottom:4px}
+.tc-loc svg{width:16px;height:16px;flex:none;margin-top:1px;color:var(--faint)}
+.tc-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--faint);margin-top:9px}
+.tc-next{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);display:flex;align-items:center;gap:8px;font-size:13px}
+.tc-next .lbl{color:var(--faint);font-weight:600}
+.tc-next b{color:var(--ink)}
+.tc-next .go{margin-left:auto;color:var(--brand-ink);font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:3px}
+
+/* buttons */
+.btn{appearance:none;border:1px solid transparent;border-radius:12px;font-weight:700;font-size:14px;padding:11px 15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1}
+.btn svg{width:17px;height:17px}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:active{background:#0049B8}
+.btn-accept{background:var(--ok);color:#fff}
+.btn-accept:active{background:#157A40}
+.btn-reject{background:#fff;color:var(--crit-ink);border-color:#F3B4AE}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+.btn-neutral{background:#EEF2F6;color:var(--ink)}
+.btn-block{width:100%}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+
+/* ===== Detail overlay ===== */
+.detail{position:absolute;inset:0;background:var(--subtle);z-index:40;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .22s ease;visibility:hidden}
+.detail.open{transform:none;visibility:visible}
+.d-bar{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;z-index:2}
+.d-back{width:38px;height:38px;border-radius:11px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--ink);flex:none}
+.d-bar .d-ttl{font-size:13px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+.d-bar .pill{margin-left:auto}
+.d-scroll{flex:1;overflow-y:auto;padding:14px 14px 20px}
+.d-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}
+.d-card h2{font-size:17px;line-height:1.3;margin:0 0 4px}
+.d-sub{color:var(--muted);font-size:12.5px;margin:0}
+.d-label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+
+/* map */
+.d-map{position:relative;height:150px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#EAEFF6;margin-bottom:10px}
+.d-map .grid{position:absolute;inset:0;color:#C7D2E0}
+.d-map .lbl{position:absolute;left:10px;bottom:9px;font-size:11px;font-weight:700;color:var(--faint);background:rgba(255,255,255,.85);padding:3px 8px;border-radius:7px}
+.d-map .pin{position:absolute;left:50%;top:48%;transform:translate(-50%,-100%)}
+.d-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.d-row:first-of-type{border-top:0}
+.d-row svg{width:17px;height:17px;color:var(--faint);flex:none;margin-top:2px}
+.d-row b{display:block;font-size:13px}
+.d-row span{font-size:12.5px;color:var(--muted)}
+
+/* photo placeholder */
+.d-photo{height:120px;border-radius:12px;border:1px dashed var(--line-strong);background:var(--subtle);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--faint);font-size:12.5px;text-align:center;padding:12px}
+.d-photo svg{width:26px;height:26px}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:12px;padding:0 0 16px;position:relative}
+.steps li:last-child{padding-bottom:0}
+.steps li:not(:last-child)::before{content:"";position:absolute;left:11px;top:24px;bottom:0;width:2px;background:var(--line)}
+.steps li.ok:not(:last-child)::before{background:var(--ok)}
+.steps .dot{width:24px;height:24px;border-radius:50%;flex:none;display:grid;place-items:center;border:2px solid var(--line-strong);background:#fff;color:#fff;z-index:1}
+.steps li.ok .dot{background:var(--ok);border-color:var(--ok)}
+.steps li.now .dot{border-color:var(--brand);background:#fff;box-shadow:0 0 0 4px var(--brand-soft)}
+.steps li.now .dot::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--brand)}
+.steps .s-wrap{flex:1;min-width:0;padding-bottom:2px}
+.steps li.now .s-wrap{background:var(--brand-soft);border-radius:10px;padding:8px 12px;margin:-7px 0 0}
+.steps .s-b{font-weight:800;font-size:14px}
+.steps .s-d{color:var(--muted);font-size:12.5px;margin-top:2px}
+.steps .s-t{font-size:11.5px;color:var(--faint);margin-top:3px;font-variant-numeric:tabular-nums}
+.steps li.pending .s-b,.steps li.pending .s-d{color:var(--faint)}
+
+/* notice */
+.notice{font-size:12.5px;color:var(--muted);background:var(--subtle);border:1px solid var(--line);border-radius:11px;padding:10px 12px;line-height:1.5;display:flex;gap:9px;align-items:flex-start}
+.notice svg{width:16px;height:16px;flex:none;margin-top:1px;color:var(--brand)}
+.notice.ok{background:var(--ok-bg);border-color:#BFE3CC;color:var(--ok-ink)}
+.notice.ok svg{color:var(--ok)}
+
+/* action bar */
+.actionbar{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:11px 14px calc(11px + env(safe-area-inset-bottom))}
+.ab-hint{font-size:11.5px;color:var(--faint);text-align:center;margin:0 0 8px}
+
+/* ===== bottom nav ===== */
+.tabbar{position:absolute;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;padding:7px 8px calc(7px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1;border:0;background:transparent;color:var(--faint);font-weight:700;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 0;border-radius:10px}
+.tabbar button svg{width:22px;height:22px}
+.tabbar button[aria-current="page"]{color:var(--brand-ink)}
+
+/* empty */
+.empty{text-align:center;color:var(--faint);padding:40px 20px;font-size:13.5px}
+.empty svg{width:40px;height:40px;color:var(--line-strong);margin-bottom:10px}
+
+/* profile */
+.prof-head{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;margin-bottom:12px}
+.prof-av{width:54px;height:54px;border-radius:50%;background:var(--signal);color:var(--signal-ink);font-weight:800;font-size:19px;display:grid;place-items:center;flex:none}
+.prof-head b{font-size:16px}
+.prof-head small{color:var(--muted);font-size:12.5px;display:block}
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:12px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-size:22px;letter-spacing:-.02em}
+.stat small{color:var(--muted);font-size:11px;font-weight:600}
+.list-card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.list-card .li{display:flex;align-items:center;gap:11px;padding:13px 14px;border-top:1px solid var(--line);font-size:14px;font-weight:600;width:100%;background:#fff;border-left:0;border-right:0;border-bottom:0;text-align:left;color:var(--ink)}
+.list-card .li:first-child{border-top:0}
+.list-card .li svg{width:18px;height:18px;color:var(--faint)}
+.list-card .li .chev{margin-left:auto;color:var(--line-strong)}
+
+/* install banner */
+.install{display:none;align-items:center;gap:10px;background:var(--brand-soft);border:1px solid #C7DCFA;border-radius:14px;padding:11px 12px;margin-bottom:12px;font-size:12.5px;color:var(--brand-deep)}
+.install.show{display:flex}
+.install .btn{padding:8px 12px;font-size:12.5px;margin-left:auto}
+.install .x{border:0;background:transparent;color:var(--brand-ink);font-size:18px;line-height:1;padding:2px 4px}
+
+/* ===== dialog (reject) ===== */
+dialog{border:0;border-radius:18px 18px 0 0;padding:0;width:100%;max-width:var(--shell);margin:auto auto 0;background:#fff;box-shadow:0 -10px 40px rgba(16,24,40,.25)}
+dialog::backdrop{background:rgba(16,24,40,.45)}
+.dlg-in{padding:18px 16px calc(16px + env(safe-area-inset-bottom))}
+.dlg-in h3{font-size:17px;margin:0 0 3px}
+.dlg-in p.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.opt{display:flex;align-items:center;gap:11px;border:1px solid var(--line-strong);border-radius:12px;padding:12px 13px;margin-bottom:9px;font-size:14px;font-weight:600}
+.opt input{width:19px;height:19px;accent-color:var(--brand)}
+.opt.sel{border-color:var(--brand);background:var(--brand-soft)}
+textarea{width:100%;border:1px solid var(--line-strong);border-radius:12px;padding:11px 12px;font:inherit;font-size:14px;min-height:70px;resize:vertical;margin-bottom:12px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%) translateY(14px);background:var(--brand-deep);color:#fff;font-size:13px;font-weight:600;padding:11px 16px;border-radius:12px;box-shadow:0 10px 30px rgba(10,42,94,.35);opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:calc(var(--shell) - 40px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- App bar -->
+  <header class="appbar">
+    <span class="ab-logo">MM</span>
+    <div class="ab-brand"><b>Teknisi Lapangan</b><small>MM2100 Industrial Town</small></div>
+    <button class="ab-bell" id="bell" aria-label="Notifikasi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      <span class="dot" id="bellDot"></span>
+    </button>
+  </header>
+
+  <!-- Shift strip -->
+  <div class="shift" id="shift">
+    <span class="s-dot"></span>
+    <div><b id="shiftTxt">Shift Pagi aktif</b><small id="shiftSub">Teknisi A · Tim Utilitas zona utara</small></div>
+    <button class="sw-toggle" id="shiftToggle">Akhiri shift</button>
+  </div>
+
+  <!-- ============ MAIN SCROLL ============ -->
+  <div class="scroll" id="scroll">
+
+    <!-- SECTION: TUGAS -->
+    <section data-sec="tugas">
+      <div class="sec-head"><h1>Tugas saya</h1><span class="muted" id="today">Rab, 7 Okt 2026</span></div>
+
+      <div class="install" id="install">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/></svg>
+        <span>Pasang ke layar utama agar seperti aplikasi.</span>
+        <button class="btn btn-primary" id="installBtn">Pasang</button>
+        <button class="x" id="installX" aria-label="Tutup">&times;</button>
+      </div>
+
+      <div class="seg" role="tablist" aria-label="Filter tugas">
+        <button role="tab" aria-selected="true" data-tab="masuk">Masuk <span class="cnt" id="cMasuk">0</span></button>
+        <button role="tab" aria-selected="false" data-tab="aktif">Aktif <span class="cnt" id="cAktif">0</span></button>
+        <button role="tab" aria-selected="false" data-tab="selesai">Selesai <span class="cnt" id="cSelesai">0</span></button>
+      </div>
+
+      <div id="taskList"></div>
+    </section>
+
+    <!-- SECTION: RIWAYAT -->
+    <section data-sec="riwayat" hidden>
+      <div class="sec-head"><h1>Riwayat</h1></div>
+      <div id="historyList"></div>
+    </section>
+
+    <!-- SECTION: PROFIL -->
+    <section data-sec="profil" hidden>
+      <div class="sec-head"><h1>Profil</h1></div>
+      <div class="prof-head">
+        <span class="prof-av">TA</span>
+        <div><b>Teknisi A</b><small>Tim Utilitas zona utara · Shift Pagi</small></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><b id="stSel">0</b><small>Selesai hari ini</small></div>
+        <div class="stat"><b id="stAkt">0</b><small>Sedang aktif</small></div>
+        <div class="stat"><b>4,8</b><small>Rating rata-rata</small></div>
+      </div>
+      <div class="list-card">
+        <button class="li" data-toast="Status ketersediaan diatur (mockup)."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Atur ketersediaan<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        <button class="li" data-toast="Pengaturan notifikasi dibuka (mockup)."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg>Notifikasi<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        <button class="li" data-toast="Bantuan & kontak supervisor (mockup)."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 2.5M12 17h.01"/></svg>Bantuan<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ============ DETAIL OVERLAY ============ -->
+  <div class="detail" id="detail" role="dialog" aria-modal="true" aria-label="Detail tugas">
+    <div class="d-bar">
+      <button class="d-back" id="dBack" aria-label="Kembali"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <span class="d-ttl" id="dNo">LP-0000</span>
+      <span class="pill" id="dPill"><span class="pdot"></span><span id="dPillTxt">—</span></span>
+    </div>
+    <div class="d-scroll" id="dScroll"><!-- filled by JS --></div>
+    <div class="actionbar" id="dAction"><!-- filled by JS --></div>
+  </div>
+
+  <!-- ============ BOTTOM NAV ============ -->
+  <nav class="tabbar" aria-label="Navigasi utama">
+    <button data-nav="tugas" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tugas</button>
+    <button data-nav="riwayat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/><path d="M12 7v5l3 2"/></svg>Riwayat</button>
+    <button data-nav="profil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Profil</button>
+  </nav>
+
+</div>
+
+<!-- Reject dialog -->
+<dialog id="rejectDlg" aria-labelledby="rjTitle">
+  <div class="dlg-in">
+    <h3 id="rjTitle">Tolak tugas</h3>
+    <p class="sub">Tugas akan dikembalikan ke supervisor dan dialihkan ke teknisi lain. Alasan tercatat untuk evaluasi beban.</p>
+    <div id="rjOpts"></div>
+    <textarea id="rjNote" placeholder="Catatan tambahan (opsional)"></textarea>
+    <div class="row2">
+      <button class="btn btn-neutral" id="rjCancel">Batal</button>
+      <button class="btn btn-reject" id="rjConfirm">Tolak tugas</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="sync.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var CAT_ICON={
+    'Penerangan jalan':'<path d="M9 18h6M10 22h4M15.1 14c.2-1 .7-1.7 1.4-2.5A4.6 4.6 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.4 2.5"/>',
+    'Air bersih':'<path d="M12 2.7S6 10 6 14a6 6 0 0 0 12 0c0-4-6-11.3-6-11.3z"/>',
+    'Kelistrikan':'<path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/>',
+    'Jalan & drainase':'<path d="M4 21 8 3M20 21 16 3M12 5v2M12 11v2M12 17v2"/>',
+    'Keamanan':'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    'Kebersihan & sampah':'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+    'Lalu lintas & parkir':'<rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="7" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="12" cy="17" r="1.3"/>'
+  };
+  function catIcon(c){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(CAT_ICON[c]||'<path d="M12 2 2 7l10 5 10-5-10-5z"/>')+'</svg>'}
+  function pin(w){w=w||40;return '<svg class="pin" width="'+w+'" height="'+w+'" viewBox="0 0 24 24"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z" fill="#F2A900"/><circle cx="12" cy="10" r="2.6" fill="#2A1D00"/></svg>'}
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+  /* ---------- data: technician tasks ---------- */
+  /* state: masuk | menuju | lokasi | selesai | ditolak
+     tenant/CMS mapping -> menuju:'Petugas menuju lokasi' lokasi:'Dalam penanganan' selesai:'Selesai' */
+  var TASKS=[
+    {no:'LP-2026-0414',title:'Tekanan air bersih rendah di blok utara',cat:'Air bersih',zone:'Zona utara',from:'Supervisor Roni',at:'08.41',loc:'Blok U-7, dekat pompa booster',patokan:'Sebelah gudang cat biru',crit:false,state:'masuk',photo:true,eta:12,t:{}},
+    {no:'LP-2026-0419',title:'Rambu portal rusak di gerbang barat',cat:'Lalu lintas & parkir',zone:'Zona selatan',from:'Supervisor Roni',at:'09.10',loc:'Gerbang barat, pos jaga 2',patokan:'Dekat palang masuk truk',crit:true,state:'masuk',photo:false,eta:8,t:{}},
+    {no:'LP-2026-0415',title:'Lampu jalan mati di koridor utama',cat:'Penerangan jalan',zone:'Zona selatan',from:'Auto-assign',at:'07.55',loc:'Koridor utama, dekat halte B',patokan:'Tiang lampu nomor 14',crit:false,state:'menuju',photo:true,eta:10,t:{terima:'07.56'}},
+    {no:'LP-2026-0398',title:'Pohon tumbang menutup sebagian jalan',cat:'Jalan & drainase',zone:'Zona utara',from:'Supervisor Roni',at:'Kemarin',loc:'Jl. Sentosa, Blok H',patokan:'—',crit:false,state:'selesai',photo:true,eta:0,t:{terima:'Kemarin 14.02',tiba:'Kemarin 14.20',selesai:'Kemarin 15.10'}}
+  ];
+  var byNo={};TASKS.forEach(function(t){byNo[t.no]=t});
+
+  var STATUS={masuk:'Tugas baru',menuju:'Menuju lokasi',lokasi:'Dalam penanganan',selesai:'Selesai',ditolak:'Ditolak',kembali:'Belum direspons'};
+  var STATUS_PILL={masuk:'pill-amber',menuju:'pill-blue',lokasi:'pill-blue',selesai:'pill-green',ditolak:'pill-gray',kembali:'pill-amber'};
+  var TENANT_STATUS={menuju:'Petugas menuju lokasi',lokasi:'Dalam penanganan',selesai:'Selesai'};
+
+  /* ---------- toast ---------- */
+  var toastT;
+  function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){$('toast').classList.remove('show')},2600)}
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-toast]');if(b){toast(b.dataset.toast)}});
+
+  /* ---------- task card ---------- */
+  function card(t){
+    var html='<div class="tcard'+(t.crit?' crit':'')+'" data-open="'+t.no+'">'+
+      '<div class="tc-top"><span class="tc-no">'+t.no+'</span>'+
+        (t.crit?'<span class="pill pill-red"><span class="pdot"></span>Darurat</span>':'')+
+        '<span class="pill '+STATUS_PILL[t.state]+'"><span class="pdot"></span>'+STATUS[t.state]+'</span></div>'+
+      '<h3>'+esc(t.title)+'</h3>'+
+      '<div class="tc-chips"><span class="chip">'+catIcon(t.cat)+esc(t.cat)+'</span><span class="chip">'+esc(t.zone)+'</span></div>'+
+      '<div class="tc-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>'+esc(t.loc)+'</div>'+
+      '<div class="tc-meta"><span>Dari '+esc(t.from)+'</span><span>·</span><span>'+esc(t.at)+'</span></div>';
+    if(t.state==='masuk'){
+      html+='<div style="display:flex;align-items:center;gap:8px;margin-top:11px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="'+(t.crit?'var(--crit-ink)':'var(--muted)')+'" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>'+
+        '<span style="font-size:12px;font-weight:700;color:'+(t.crit?'var(--crit-ink)':'var(--muted)')+'">Respon <span data-clock="'+t.no+'">--:--</span></span>'+
+        '<span style="flex:1;height:5px;border-radius:999px;background:var(--line);overflow:hidden"><i data-clockbar="'+t.no+'" style="display:block;height:100%;width:100%;background:'+(t.crit?'var(--crit)':'var(--brand)')+'"></i></span></div>'+
+        '<div class="row2" style="margin-top:10px"><button class="btn btn-reject" data-act="tolak" data-no="'+t.no+'">Tolak</button>'+
+        '<button class="btn btn-accept" data-act="terima" data-no="'+t.no+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Terima</button></div>';
+    }else if(t.state==='menuju'){
+      html+='<div class="tc-next"><span class="lbl">Berikutnya:</span><b>Tandai tiba di lokasi</b><span class="go">Buka<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>';
+    }else if(t.state==='lokasi'){
+      html+='<div class="tc-next"><span class="lbl">Berikutnya:</span><b>Selesaikan & unggah foto</b><span class="go">Buka<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>';
+    }
+    html+='</div>';
+    return html;
+  }
+
+  var curTab='masuk';
+  function stateGroup(s){if(s==='masuk')return 'masuk';if(s==='menuju'||s==='lokasi')return 'aktif';if(s==='selesai')return 'selesai';return 'lain'}
+  function counts(){
+    var c={masuk:0,aktif:0,selesai:0};
+    TASKS.forEach(function(t){var g=stateGroup(t.state);if(c[g]!=null)c[g]++});
+    $('cMasuk').textContent=c.masuk;$('cAktif').textContent=c.aktif;$('cSelesai').textContent=c.selesai;
+    $('bellDot').style.display=c.masuk>0?'block':'none';
+    $('stSel').textContent=TASKS.filter(function(t){return t.state==='selesai'}).length;
+    $('stAkt').textContent=c.aktif;
+  }
+  function renderList(){
+    var list=TASKS.filter(function(t){return stateGroup(t.state)===curTab});
+    var empties={masuk:'Tidak ada tugas baru. Tetap siaga ya.',aktif:'Belum ada tugas aktif.',selesai:'Belum ada tugas selesai hari ini.'};
+    $('taskList').innerHTML=list.length?list.map(card).join(''):
+      '<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg><p>'+empties[curTab]+'</p></div>';
+    counts();
+  }
+  function renderHistory(){
+    var list=TASKS.filter(function(t){return t.state==='selesai'||t.state==='ditolak'||t.state==='kembali'});
+    $('historyList').innerHTML=list.length?list.map(card).join(''):'<div class="empty"><p>Belum ada riwayat.</p></div>';
+  }
+
+  /* ---------- segment tabs ---------- */
+  document.querySelectorAll('.seg [data-tab]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.seg [data-tab]').forEach(function(x){x.setAttribute('aria-selected','false')});
+      b.setAttribute('aria-selected','true');curTab=b.dataset.tab;renderList();
+    });
+  });
+
+  /* ---------- bottom nav ---------- */
+  document.querySelectorAll('.tabbar [data-nav]').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.tabbar [data-nav]').forEach(function(x){x.removeAttribute('aria-current')});
+      b.setAttribute('aria-current','page');
+      var nav=b.dataset.nav;
+      document.querySelectorAll('[data-sec]').forEach(function(s){s.hidden=s.dataset.sec!==nav});
+      if(nav==='riwayat')renderHistory();
+      $('scroll').scrollTo(0,0);
+    });
+  });
+
+  /* ---------- detail ---------- */
+  var detail=$('detail'),curNo=null;
+
+  /* ---------- response window (SLA) & state 'belum direspons' ---------- */
+  var DEADLINES={};
+  function respMinOf(t){return t.crit?2:5}
+  function remindMinOf(t){return t.crit?1:2}
+  function ensureDeadline(t){if(t.state!=='masuk'){delete DEADLINES[t.no];return 0}if(!DEADLINES[t.no])DEADLINES[t.no]=Date.now()+respMinOf(t)*60000;return DEADLINES[t.no]}
+  function fmtClock(ms){var s=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(s/60);return m+':'+('0'+(s%60)).slice(-2)}
+  function escStep(kind,title,desc,no){
+    var col=kind==='ok'?'var(--ok)':'var(--line-strong)';var attr=(kind==='remind'&&no)?' data-remind="'+no+'"':'';
+    return '<li'+attr+' style="display:flex;gap:10px;padding:7px 0;align-items:flex-start"><span class="escdot" style="width:13px;height:13px;border-radius:50%;flex:none;margin-top:3px;background:'+col+'"></span><div><b style="font-size:12.5px">'+title+'</b><div style="font-size:11.5px;color:var(--muted);line-height:1.45">'+desc+'</div></div></li>';
+  }
+  function respCard(t){
+    var rm=respMinOf(t),rd=remindMinOf(t),crit=t.crit;
+    return '<div class="d-card" style="border-color:'+(crit?'#F3B4AE':'var(--line)')+'">'+
+      '<p class="d-label" style="color:'+(crit?'var(--crit-ink)':'var(--faint)')+'">Batas waktu respons</p>'+
+      '<div style="display:flex;align-items:center;gap:13px">'+
+        '<div style="flex:none;text-align:center;min-width:64px"><div data-clock="'+t.no+'" style="font-size:27px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:'+(crit?'var(--crit-ink)':'var(--brand-ink)')+'">'+fmtClock(rm*60000)+'</div><div style="font-size:10.5px;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.04em">sisa waktu</div></div>'+
+        '<div style="flex:1;min-width:0"><p style="margin:0 0 7px;font-size:13px;font-weight:700">Terima atau tolak dalam '+rm+' menit'+(crit?' (darurat)':'')+'.</p><div style="height:7px;border-radius:999px;background:var(--line);overflow:hidden"><i data-clockbar="'+t.no+'" style="display:block;height:100%;width:100%;background:'+(crit?'var(--crit)':'var(--brand)')+';transition:width 1s linear"></i></div></div>'+
+      '</div>'+
+      '<ul style="list-style:none;margin:13px 0 0;padding:0">'+
+        escStep('ok','Tugas masuk sekarang','Dikirim ke HP Anda lewat push + WhatsApp.')+
+        escStep('remind','Pengingat otomatis','Menit ke-'+rd+' kalau belum dibuka: diingatkan lagi lewat push &amp; WhatsApp.',t.no)+
+        escStep('end','Otomatis kembali ke supervisor','Menit ke-'+rm+' tanpa respons: tugas ditarik dan dialihkan ke teknisi lain.'+(crit?' Laporan darurat langsung dieskalasi ke atasan.':''))+
+      '</ul>'+
+      '<button class="btn btn-neutral btn-sm" type="button" data-act="simdiam" data-no="'+t.no+'" style="margin-top:13px;width:100%">Simulasikan: tidak direspons</button>'+
+    '</div>';
+  }
+  function resultCard(t){
+    var auto=t.state==='kembali';
+    var body=auto
+      ? 'Tugas tidak direspons dalam '+respMinOf(t)+' menit, jadi <b>otomatis dikembalikan ke supervisor</b> dan dialihkan ke teknisi lain. Anda tidak lagi bertanggung jawab atas laporan ini.'
+      : 'Anda menolak tugas'+(t.rejectReason?' &mdash; alasan: <b>'+esc(t.rejectReason)+'</b>':'')+'. Tugas dikembalikan ke supervisor untuk dialihkan ke teknisi lain.';
+    return '<div class="notice" style="background:'+(auto?'var(--warn-bg)':'var(--subtle)')+';border-color:'+(auto?'#F3D19B':'var(--line)')+';color:'+(auto?'var(--warn-ink)':'var(--muted)')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg><div><b>'+(auto?'Belum direspons &mdash; dikembalikan':'Tugas ditolak')+'</b><br>'+body+'</div></div>';
+  }
+  function returnToSupervisor(no,auto){
+    var t=byNo[no];if(!t||t.state!=='masuk')return;
+    t.state='kembali';t.t=t.t||{};t.t.kembali=nowTime();delete DEADLINES[no];
+    pushSync(t);
+    if(detail.classList.contains('open')&&curNo===no)openDetail(no);else renderList();
+    toast(auto?('Tugas '+no+' tidak direspons — otomatis kembali ke supervisor.'):('Tugas '+no+' dikembalikan ke supervisor.'));
+  }
+  function tick(){
+    var expire=[];
+    TASKS.forEach(function(t){
+      if(t.state!=='masuk')return;
+      var dl=ensureDeadline(t),rem=dl-Date.now();
+      if(rem<=0){expire.push(t.no);return}
+      var total=respMinOf(t)*60000;
+      document.querySelectorAll('[data-clock="'+t.no+'"]').forEach(function(el){el.textContent=fmtClock(rem)});
+      document.querySelectorAll('[data-clockbar="'+t.no+'"]').forEach(function(el){el.style.width=(rem/total*100)+'%'});
+      var remindActive=rem<=(respMinOf(t)-remindMinOf(t))*60000;
+      document.querySelectorAll('[data-remind="'+t.no+'"] .escdot').forEach(function(d){d.style.background=remindActive?'var(--signal)':'var(--line-strong)'});
+    });
+    expire.forEach(function(no){returnToSupervisor(no,true)});
+  }
+  function stepList(t){
+    var order=['menuju','lokasi','selesai'];
+    var steps=[
+      {k:'terima',b:'Diterima',d:'Anda menerima tugas.'},
+      {k:'menuju',b:'Menuju lokasi',d:'Tenant dikabari: Petugas menuju lokasi. Perkiraan tiba '+t.eta+' menit.'},
+      {k:'lokasi',b:'Di lokasi & penanganan',d:'Anda tiba dan mulai perbaikan.'},
+      {k:'selesai',b:'Selesai',d:'Perbaikan selesai, menunggu konfirmasi tenant.'}
+    ];
+    var reached={masuk:0,menuju:2,lokasi:3,selesai:4,ditolak:0}[t.state];
+    var check='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+    return steps.map(function(s,i){
+      var n=i+1,cls=n<reached?'ok':(n===reached?'now':'pending');
+      var time=t.t&&t.t[s.k]?'<div class="s-t">'+esc(t.t[s.k])+'</div>':'';
+      return '<li class="'+cls+'"><span class="dot">'+(cls==='ok'?check:'')+'</span><div class="s-wrap"><div class="s-b">'+s.b+'</div><div class="s-d">'+s.d+'</div>'+time+'</div></li>';
+    }).join('');
+  }
+  function actionBar(t){
+    if(t.state==='masuk'){
+      return '<p class="ab-hint">Respon sebelum waktu habis — kalau didiamkan, tugas otomatis kembali ke supervisor.</p>'+
+        '<div class="row2"><button class="btn btn-reject" data-act="tolak" data-no="'+t.no+'">Tolak</button>'+
+        '<button class="btn btn-accept" data-act="terima" data-no="'+t.no+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Terima tugas</button></div>';
+    }
+    if(t.state==='menuju'){
+      return '<div class="row2"><button class="btn btn-outline" data-toast="Peta dibuka (mockup).">Buka peta</button>'+
+        '<button class="btn btn-primary" data-act="tiba" data-no="'+t.no+'">Tandai tiba</button></div>';
+    }
+    if(t.state==='lokasi'){
+      return '<button class="btn btn-primary btn-block" data-act="selesai" data-no="'+t.no+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Selesaikan & unggah foto</button>';
+    }
+    if(t.state==='selesai'){
+      return '<p class="ab-hint">Tugas selesai. Menunggu konfirmasi tenant pelapor.</p><button class="btn btn-neutral btn-block" data-back>Kembali ke daftar</button>';
+    }
+    return '<button class="btn btn-neutral btn-block" data-back>Kembali ke daftar</button>';
+  }
+  function openDetail(no){
+    var t=byNo[no];if(!t)return;curNo=no;
+    $('dNo').textContent=t.no;
+    $('dPill').className='pill '+STATUS_PILL[t.state];
+    $('dPillTxt').textContent=STATUS[t.state];
+    var notice='';
+    if(t.state==='masuk'){
+      notice=respCard(t);
+    }else if(t.state==='kembali'||t.state==='ditolak'){
+      notice=resultCard(t);
+    }else if(TENANT_STATUS[t.state]){
+      notice='<div class="notice ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><div>Tenant pelapor otomatis dikabari: <b>'+TENANT_STATUS[t.state]+'</b>. Supervisor melihat progres ini real-time.</div></div>';
+    }else{
+      notice='<div class="notice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg><div>Terima untuk mulai. Status tenant berubah jadi <b>Petugas menuju lokasi</b> begitu diterima.</div></div>';
+    }
+    var photo=t.photo
+      ? '<div class="d-photo" style="background:#1E2A44;color:#CBD5E6;border-style:solid">'+pin(0)+'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Foto dari tenant pelapor</div>'
+      : '<div class="d-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Tenant tidak melampirkan foto</div>';
+    $('dScroll').innerHTML=
+      '<div class="d-card"><div class="tc-chips" style="margin-bottom:10px"><span class="chip">'+catIcon(t.cat)+esc(t.cat)+'</span><span class="chip">'+esc(t.zone)+'</span>'+(t.crit?'<span class="pill pill-red"><span class="pdot"></span>Darurat</span>':'')+'</div>'+
+        '<h2>'+esc(t.title)+'</h2><p class="d-sub">Ditugaskan oleh '+esc(t.from)+' · '+esc(t.at)+'</p></div>'+
+      notice+
+      '<div class="d-card"><p class="d-label">Lokasi kejadian</p>'+
+        '<div class="d-map"><svg class="grid" viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70H600M0 150H600M150 0V220M320 0V220M470 0V220" stroke="currentColor" stroke-width="10" stroke-opacity=".5"/></svg>'+pin(38)+'<span class="lbl">[Peta kawasan MM2100]</span></div>'+
+        '<div class="d-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg><div><b>'+esc(t.loc)+'</b><span>'+esc(t.zone)+'</span></div></div>'+
+        '<div class="d-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0zM17.5 17.5 22 22"/></svg><div><b>Patokan</b><span>'+esc(t.patokan||'Tidak diisi')+'</span></div></div>'+
+        '<div style="margin-top:10px"><button class="btn btn-outline btn-block" data-toast="Navigasi dibuka di peta (mockup)."><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Navigasi ke lokasi</button></div></div>'+
+      '<div class="d-card"><p class="d-label">Foto kejadian</p>'+photo+'</div>'+
+      ((t.state==='kembali'||t.state==='ditolak')?'':'<div class="d-card"><p class="d-label">Status penanganan</p><ul class="steps">'+stepList(t)+'</ul></div>');
+    $('dAction').innerHTML=actionBar(t);
+    detail.classList.add('open');tick();
+  }
+  function closeDetail(){detail.classList.remove('open');curNo=null;renderList()}
+  $('dBack').addEventListener('click',closeDetail);
+
+  /* ---------- actions ---------- */
+  function nowTime(){var d=new Date();return ('0'+d.getHours()).slice(-2)+'.'+('0'+d.getMinutes()).slice(-2)}
+  function pushSync(t){MMSync.setStatus(t.no,{techState:t.state,status:MMSync.statusFor(t.state),stamps:t.t,assignee:'A',assigneeName:'Teknisi A',rejectReason:t.rejectReason,title:t.title,cat:t.cat,zone:t.zone,loc:t.loc,patokan:t.patokan,crit:t.crit,photo:t.photo,eta:t.eta})}
+  function advance(no,to){
+    var t=byNo[no];if(!t)return;t.state=to;t.t=t.t||{};
+    if(to==='menuju'){t.t.terima=t.t.terima||nowTime()}
+    if(to==='lokasi'){t.t.tiba=nowTime()}
+    if(to==='selesai'){t.t.selesai=nowTime()}
+    pushSync(t);
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act]');
+    if(b){
+      var no=b.dataset.no,act=b.dataset.act;
+      if(act==='terima'){advance(no,'menuju');toast('Tugas diterima. Tenant dikabari: Petugas menuju lokasi.');if(detail.classList.contains('open'))openDetail(no);else{curTab='aktif';document.querySelectorAll('.seg [data-tab]').forEach(function(x){x.setAttribute('aria-selected',x.dataset.tab==='aktif'?'true':'false')});renderList()}}
+      else if(act==='tiba'){advance(no,'lokasi');toast('Ditandai tiba di lokasi. Tenant: Dalam penanganan.');openDetail(no)}
+      else if(act==='selesai'){advance(no,'selesai');toast('Tugas selesai. Menunggu konfirmasi tenant.');openDetail(no)}
+      else if(act==='tolak'){openReject(no)}
+      else if(act==='simdiam'){returnToSupervisor(no,true)}
+      return;
+    }
+    var back=e.target.closest('[data-back]');if(back){closeDetail();return}
+    var openEl=e.target.closest('[data-open]');
+    if(openEl && !e.target.closest('[data-act]')){openDetail(openEl.dataset.open)}
+  });
+
+  /* ---------- reject dialog ---------- */
+  var rjDlg=$('rejectDlg'),rjNo=null;
+  var REASONS=['Sedang menangani tugas lain','Di luar zona / shift saya','Perlu alat / material tambahan','Lokasi tidak dapat diakses'];
+  function openReject(no){
+    rjNo=no;
+    $('rjOpts').innerHTML=REASONS.map(function(r,i){return '<label class="opt'+(i===0?' sel':'')+'"><input type="radio" name="rj" value="'+esc(r)+'"'+(i===0?' checked':'')+'><span>'+esc(r)+'</span></label>'}).join('');
+    $('rjNote').value='';
+    rjDlg.showModal();
+  }
+  $('rjOpts').addEventListener('change',function(){
+    document.querySelectorAll('#rjOpts .opt').forEach(function(o){o.classList.toggle('sel',o.querySelector('input').checked)});
+  });
+  $('rjCancel').addEventListener('click',function(){rjDlg.close()});
+  $('rjConfirm').addEventListener('click',function(){
+    var t=byNo[rjNo];if(t){t.state='ditolak';var sel=document.querySelector('#rjOpts input:checked');t.rejectReason=sel?sel.value:'';pushSync(t)}
+    rjDlg.close();if(detail.classList.contains('open'))closeDetail();else renderList();
+    toast('Tugas ditolak & dikembalikan ke supervisor.');
+  });
+
+  /* ---------- shared sync (cross-app source of truth) ---------- */
+  function syncIn(){
+    var map=MMSync.all();
+    Object.keys(map).forEach(function(no){
+      var s=map[no];if(!s.techState)return;
+      if(byNo[no]){byNo[no].state=s.techState;if(s.stamps)byNo[no].t=s.stamps;if(s.rejectReason)byNo[no].rejectReason=s.rejectReason}
+      else{var nt={no:no,title:s.title||no,cat:s.cat||'Lainnya',zone:s.zone||'—',from:'Supervisor Roni',at:s.at||'Baru saja',loc:s.loc||'Lihat di peta',patokan:s.patokan||'—',crit:!!s.crit,state:s.techState,photo:!!s.photo,eta:s.eta||12,t:s.stamps||{}};TASKS.unshift(nt);byNo[no]=nt}
+    });
+    /* backfill: laporan tenant yang belum tersinkron (mis. dibuat sebelum fitur sync) */
+    try{JSON.parse(localStorage.getItem('mm2100_reports')||'[]').forEach(function(r){
+      if(byNo[r.no]||(map[r.no]&&map[r.no].techState))return;
+      var tss=(r.method==='auto')?'menuju':'masuk';
+      var nt={no:r.no,title:r.title||r.no,cat:r.cat||'Lainnya',zone:r.zone||'—',from:(r.method==='auto'?'Auto-assign':'Supervisor Roni'),at:r.time||'Baru saja',loc:r.patokan||r.zone||'Lihat di peta',patokan:r.patokan||'—',crit:!!r.darurat,state:tss,photo:!!r.photo,eta:12,t:(tss==='menuju'?{terima:r.time}:{})};
+      TASKS.unshift(nt);byNo[r.no]=nt;
+    });}catch(e){}
+  }
+  function load(){syncIn()}
+
+  /* ---------- shift toggle ---------- */
+  var onShift=true;
+  $('shiftToggle').addEventListener('click',function(){
+    onShift=!onShift;
+    $('shift').classList.toggle('off',!onShift);
+    $('shiftTxt').textContent=onShift?'Shift Pagi aktif':'Sedang off-shift';
+    $('shiftSub').textContent=onShift?'Teknisi A · Tim Utilitas zona utara':'Mulai shift untuk menerima tugas baru';
+    this.textContent=onShift?'Akhiri shift':'Mulai shift';
+    toast(onShift?'Shift dimulai. Anda siap menerima tugas.':'Shift diakhiri. Tidak menerima tugas baru.');
+  });
+  $('bell').addEventListener('click',function(){toast(($('cMasuk').textContent!=='0'?$('cMasuk').textContent+' tugas baru menunggu respon.':'Tidak ada notifikasi baru.'))});
+
+  /* ---------- PWA ---------- */
+  if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw-teknisi.js').catch(function(){})})}
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferredPrompt=e;$('install').classList.add('show')});
+  $('installBtn').addEventListener('click',function(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null;$('install').classList.remove('show')}else{toast('Gunakan menu browser: Tambahkan ke Layar Utama.')}});
+  $('installX').addEventListener('click',function(){$('install').classList.remove('show')});
+  window.addEventListener('appinstalled',function(){$('install').classList.remove('show')});
+
+  /* ---------- init ---------- */
+  MMSync.onChange(function(){
+    syncIn();renderList();tick();
+    if(detail.classList.contains('open')&&curNo){openDetail(curNo)}
+    if($('cMasuk').textContent!=='0'){toast('Tugas / status diperbarui dari pusat.')}
+  });
+  load();renderList();tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>

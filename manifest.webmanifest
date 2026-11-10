@@ -1,0 +1,16 @@
+{
+  "name": "MM2100 Teknisi Lapangan",
+  "short_name": "Teknisi",
+  "description": "Aplikasi lapangan teknisi kawasan MM2100: terima tugas, navigasi lokasi, dan update status penanganan.",
+  "lang": "id",
+  "start_url": "./teknisi.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A2A5E",
+  "theme_color": "#0057D9",
+  "icons": [
+    { "src": "teknisi-icon.svg", "sizes": "192x192 512x512", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "teknisi-icon.svg", "sizes": "192x192 512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
